@@ -1,0 +1,32 @@
+name: Next JS Build with Cashing & Artifacts
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses:   actions/checkout@v6.0.2
+
+
+      - name: setup Node JS
+        uses: actions/setup-node@v6.3.0
+        with:
+          node-version: 22.x
+          cache: 'npm'
+
+      - name: install Dependencies
+        run: npm install
+
+      - name: Build Next Js App
+        run: npm run build
+
+      - name: Upload Build on Artifacts
+        uses: actions/upload-artifact@v3.2.2
+        with:
+          name: nextjs-build
+          path: out/
